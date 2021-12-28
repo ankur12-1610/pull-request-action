@@ -27898,57 +27898,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 7672:
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-(__nccwpck_require__(2437).config)();
-const core = __nccwpck_require__(2186);
-const github = __nccwpck_require__(5438);
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const { Octokit } = __nccwpck_require__(9351);
-            const { context } = __nccwpck_require__(5438);
-            const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
-            const octokit = new Octokit({
-                auth: GITHUB_TOKEN
-            });
-            const comment = core.getInput('content');
-            const reaction = core.getInput('reaction');
-            const tag_creator = core.getInput('tag_creator');
-            if (typeof GITHUB_TOKEN !== 'string') {
-                throw new Error('Invalid GITHUB_TOKEN: did you forget to set it in your action config?');
-            }
-            const { pull_request } = context.payload;
-            const payload = context.payload.pull_request;
-            const author = payload.user.login;
-            const tag_text = (tag_creator ? `@` + author + ` ` : null);
-            yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: tag_text + comment, id: payload.number.toString() }));
-            yield octokit.rest.issues.addAssignees(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, assignees: author }));
-            yield octokit.rest.reactions.createForIssue(Object.assign(Object.assign({}, context.repo), { repo: context.repo.repo, issue_number: pull_request.number, content: reaction, owner: context.repo.owner }));
-        }
-        catch (e) {
-            core.error(e);
-            core.setFailed(e.message);
-        }
-    });
-}
-run();
-
-
-/***/ }),
-
 /***/ 2877:
 /***/ ((module) => {
 
@@ -28139,12 +28088,67 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(7672);
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+(__nccwpck_require__(2437).config)()
+const core = __nccwpck_require__(2186)
+const github = __nccwpck_require__(5438)
+
+async function run() {
+    try {
+    const { Octokit } = __nccwpck_require__(9351);
+    const { context } = __nccwpck_require__(5438)
+    const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN')
+    const octokit = new Octokit({
+        auth: GITHUB_TOKEN
+    });
+    const comment = core.getInput('content')
+    const reaction = core.getInput('reaction')
+    const tag_creator = core.getInput('tag_creator')
+
+    if ( typeof GITHUB_TOKEN !== 'string' ) {
+      throw new Error('Invalid GITHUB_TOKEN: did you forget to set it in your action config?');
+    }
+
+    const { pull_request } = context.payload
+    const payload = context.payload.pull_request
+    const author = payload.user.login
+    
+    const tag_text = (tag_creator ? `@` + author + ` ` : null) 
+
+    await octokit.rest.issues.createComment({
+      ...context.repo,
+      issue_number: pull_request.number,
+      body: tag_text + comment,
+      id: payload.number.toString()
+    })
+
+    await octokit.rest.issues.addAssignees({
+      ...context.repo,
+      issue_number: pull_request.number,
+      assignees: author
+    })
+
+    await octokit.rest.reactions.createForIssue({
+      ...context.repo,
+      repo: context.repo.repo,
+      issue_number: pull_request.number,
+      content: reaction,
+      owner: context.repo.owner
+    })
+  } catch (e) {
+    core.error(e)
+    core.setFailed(e.message)
+  }
+}
+
+
+
+run()
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;
