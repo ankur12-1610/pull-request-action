@@ -30,11 +30,6 @@
     "pull request",
     "node"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "author": {
     "name": "ankur12-1610",
     "email": "anknerd.12@gmail.com"
