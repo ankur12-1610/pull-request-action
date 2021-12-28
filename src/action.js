@@ -4,12 +4,9 @@ const github = require('@actions/github')
 
 async function run() {
     try {
-    const { Octokit } = require("@octokit/rest");
     const { context } = require('@actions/github')
     const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN')
-    const octokit = new Octokit({
-        auth: GITHUB_TOKEN
-    });
+    const octokit = github.getOctokit(GITHUB_TOKEN) 
     const comment = core.getInput('content')
     const reaction = core.getInput('reaction')
     const tag_creator = core.getInput('tag_creator')
@@ -46,7 +43,7 @@ async function run() {
     })
   } catch (e) {
     core.error(e)
-    core.setFailed((e as Error).message)
+    core.setFailed(e.message)
   }
 }
 
