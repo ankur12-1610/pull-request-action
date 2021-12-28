@@ -1,0 +1,25 @@
+name: Pull Request Action
+description: Says "Thank You" to the pull request author for submiting a PR, adds a reaction to the PR and assigns the PR to the author
+author: ankur12-1610 <anknerd.12@gmail.com>
+
+inputs:
+  GITHUB_TOKEN:
+    description: Github token
+    required: true
+  content:
+    description: Body of the comment
+    required: true
+  reaction: 
+    description: Reaction to the comment
+    required: true
+  tag_creator:
+    description: Creator of the pull request will be tagged or not
+    required: true
+
+branding:
+  color: blue
+  icon: tag
+
+runs:
+    using: node12
+    main: dist/index.js
