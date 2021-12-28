@@ -27915,21 +27915,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 (__nccwpck_require__(2437).config)();
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
-const { Octokit } = __nccwpck_require__(9351);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const { Octokit } = __nccwpck_require__(9351);
             const { context } = __nccwpck_require__(5438);
             const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
+            const octokit = new Octokit({
+                auth: GITHUB_TOKEN
+            });
             const comment = core.getInput('content');
             const reaction = core.getInput('reaction');
             const tag_creator = core.getInput('tag_creator');
             if (typeof GITHUB_TOKEN !== 'string') {
                 throw new Error('Invalid GITHUB_TOKEN: did you forget to set it in your action config?');
             }
-            const octokit = new Octokit({
-                auth: GITHUB_TOKEN
-            });
             const { pull_request } = context.payload;
             const payload = context.payload.pull_request;
             const author = payload.user.login;

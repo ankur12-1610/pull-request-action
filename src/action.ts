@@ -1,12 +1,15 @@
 require('dotenv').config()
 const core = require('@actions/core')
 const github = require('@actions/github')
-const { Octokit } = require("@octokit/rest");
 
 async function run() {
-  try {
+    try {
+    const { Octokit } = require("@octokit/rest");
     const { context } = require('@actions/github')
     const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN')
+    const octokit = new Octokit({
+        auth: GITHUB_TOKEN
+    });
     const comment = core.getInput('content')
     const reaction = core.getInput('reaction')
     const tag_creator = core.getInput('tag_creator')
@@ -14,10 +17,7 @@ async function run() {
     if ( typeof GITHUB_TOKEN !== 'string' ) {
       throw new Error('Invalid GITHUB_TOKEN: did you forget to set it in your action config?');
     }
- 
-    const octokit = new Octokit({
-        auth: GITHUB_TOKEN
-    });
+
     const { pull_request } = context.payload
     const payload = context.payload.pull_request
     const author = payload.user.login
