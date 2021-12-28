@@ -1,1 +1,1 @@
-2# pull-request-action
+# pull-request-action
