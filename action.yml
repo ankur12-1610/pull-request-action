@@ -1,5 +1,5 @@
-name: Pull Request Action
-description: Says "Thank You" to the pull request author for submiting a PR, adds a reaction to the PR and assigns the PR to the author
+name: PR Activity Action 🚀
+description: Comments on the newly opened PR, adds a reaction to the PR and assigns the PR to the author.
 author: ankur12-1610 <anknerd.12@gmail.com>
 
 inputs:
