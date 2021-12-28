@@ -1,0 +1,23 @@
+name: 'Pull Request Action 🚀'
+
+on: 
+  pull_request:
+    types: [opened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 🔃 Install
+        run: |
+          yarn
+      - name: 🧱 Build
+        run: |
+          yarn build
+      - uses: ./
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          content: 'thanks for submitting a pull request! We will try to review it as soon as we can :)'  #enter your custom comment in the content variable
+          reaction: 'rocket' #enter your reaction here
+          tag_creator: 'true' #enter true if you want to tag the creator of the pull request
