@@ -10,10 +10,10 @@
   "scripts": {
     "clean": "rimraf dist",
     "lint": "eslint 'src/**/*.{js,ts}?(x)' --fix",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
+    "format": "prettier --write **/*.js",
+    "format-check": "prettier --check **/*.js",
     "test": "jest",
-    "build": "ncc build src/action.ts -o dist"
+    "build": "ncc build src/action.js -o dist"
   },
   "repository": {
     "type": "git",
