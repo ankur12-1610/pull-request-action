@@ -47,5 +47,4 @@ async function run() {
     core.setFailed((e as Error).message)
   }
 }
-
 run()

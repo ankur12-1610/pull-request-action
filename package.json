@@ -8,11 +8,6 @@
     "action.yml"
   ],
   "scripts": {
-    "clean": "rimraf dist",
-    "lint": "eslint 'src/**/*.{js,ts}?(x)' --fix",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
-    "test": "jest",
     "build": "ncc build src/action.ts -o dist"
   },
   "repository": {
