@@ -6,8 +6,8 @@ inputs:
   GITHUB_TOKEN:
     description: Github token
     required: true
-  TENOR_TOKEN:
-    description: Tenor API token
+  GIPHY_TOKEN:
+    description: Giphy API token
     required: true
   searchTerm:
     description: Search term
