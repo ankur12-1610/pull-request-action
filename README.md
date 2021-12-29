@@ -19,7 +19,7 @@ This action provides the following functionaliy for the Github Actions users:
 
 ---
 
-# Usage :arrow_up::
+## Usage :arrow_up::
 Create a `.github/workflows/pr-activity.yml` file in the repository of your choice, then add following code to it:
 ```yaml
 name: 'Pull Request Action 🚀'
