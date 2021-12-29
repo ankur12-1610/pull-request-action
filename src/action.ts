@@ -1,6 +1,7 @@
 require('dotenv').config()
 const core = require('@actions/core')
 const github = require('@actions/github')
+const camelCase = require('camelcase')
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
 declare module 'axios' {
@@ -16,13 +17,14 @@ async function run() {
     const PR_REACTION = core.getInput('PR_REACTION')
     const TAG_AUTHOR = core.getInput('TAG_AUTHOR')
     const ASSIGN_TO_AUTHOR = core.getInput('ASSIGN_TO_AUTHOR')
+    const GIPHY_TOPIC = camelCase(core.getInput('GIPHY_TOPIC'))
     
   
     if ( typeof GITHUB_TOKEN !== 'string' ) {
       throw new Error('Invalid GITHUB_TOKEN: did you forget to set it in your action config?');
     }
     
-    const response: AxiosResponse =  await axios.get(`https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_TOKEN}&tag=thanksalot`)
+    const response: AxiosResponse =  await axios.get(`https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_TOKEN}&tag=${GIPHY_TOPIC}`)
     const gifUrl: string = response.data.data.images.fixed_height_small.url
 
     const gif = `\n\n![thanks](${gifUrl})`

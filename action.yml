@@ -24,6 +24,9 @@ inputs:
   ASSIGN_TO_AUTHOR:
     description: Author of the pull request will be assigned or not
     required: true
+  GIPHY_TOPIC:
+    description: Topic for the gif
+    required: true
 
 branding:
   color: blue
