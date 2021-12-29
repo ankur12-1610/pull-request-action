@@ -6,14 +6,14 @@ inputs:
   GITHUB_TOKEN:
     description: Github token
     required: true
-  content:
+  COMMENT_TEXT:
     description: Body of the comment
     required: true
-  reaction: 
+  PR_REACTION: 
     description: Reaction to the comment
     required: true
-  tag_creator:
-    description: Creator of the pull request will be tagged or not
+  TAG_AUTHOR:
+    description: Author of the pull request will be tagged or not
     required: true
 
 branding:
