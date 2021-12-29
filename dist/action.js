@@ -31,9 +31,9 @@ function run() {
             }
             //gif
             const randomPos = Math.round(Math.random() * 1000);
-            const url = `https://api.tenor.com/v1/search?q=${encodeURIComponent(searchTerm)}&pos=${randomPos}&limit=1&media_filter=minimal&contentfilter=high`;
+            const url = `https://api.tenor.com/v1/search?q=thank%20you&pos=${randomPos}&limit=1&media_filter=minimal&contentfilter=high&key=${TENOR_TOKEN}`;
             console.log(`${url}`);
-            const response = yield fetch(`${url}&key=${TENOR_TOKEN}`);
+            const response = yield fetch(url);
             const { results } = yield response.json();
             const gifUrl = results[0].media[0].tinygif.url;
             console.log(`${gifUrl}`);
