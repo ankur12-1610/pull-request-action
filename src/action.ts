@@ -9,6 +9,7 @@ async function run() {
     const COMMENT_TEXT = core.getInput('COMMENT_TEXT')
     const PR_REACTION = core.getInput('PR_REACTION')
     const TAG_AUTHOR = core.getInput('TAG_AUTHOR')
+    const ASSIGN_TO_AUTHOR = core.getInput('ASSIGN_TO_AUTHOR')
     
     if ( typeof GITHUB_TOKEN !== 'string' ) {
       throw new Error('Invalid GITHUB_TOKEN: did you forget to set it in your action config?');
@@ -19,6 +20,7 @@ async function run() {
     const payload = context.payload.pull_request
     const author = payload.user.login 
     const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null) 
+    const assignee = (ASSIGN_TO_AUTHOR ? author : null)
 
     await octokit.rest.issues.createComment({
       ...context.repo,
@@ -30,7 +32,7 @@ async function run() {
     await octokit.rest.issues.addAssignees({
       ...context.repo,
       issue_number: pull_request.number,
-      assignees: author
+      assignees: assignee
     })
 
     await octokit.rest.reactions.createForIssue({

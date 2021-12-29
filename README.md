@@ -36,17 +36,18 @@ jobs:
       - uses: ankur12-1610/pull-request-action@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          content: 'thanks for submitting a pull request! We will try to review it as soon as we can :)'  #enter your custom comment in the content variable
-          reaction: 'rocket' #enter your reaction here
-          tag_creator: 'true' #enter true if you want to tag the creator of the pull request
+          COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)'  #enter your custom comment in the content variable
+          PR_REACTION: 'rocket' #enter your reaction here
+          TAG_AUTHOR: true #enter true if you want to tag the author of the pull request
+          ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
 ```
-The comment and the reaction to the issue can be customized according to the user.
+The comment and the reaction to the PR can be customized according to the user.
 
-### Comment 💬:
-The `content` variable can take any string so feel free to enter any comment in this section.
+###  💬 COMMENT_TEXT:
+The `COMMENT_TEXT` variable can take any string so feel free to enter any comment in this section.
 
-### Reaction 🚀:
-The `reaction` variable can also be customized as the `comment` variable. The available reactions are:
+### 🚀 PR_REACTION:
+The `PR_REACTION` variable can also be customized. The available reactions are:
 
 | content    | emoji |
 | ---------- | :-----: |
@@ -59,8 +60,11 @@ The `reaction` variable can also be customized as the `comment` variable. The av
 | `heart`    | ❤️    |
 | `hooray`   | 🎉    |
 
-### Tag_Creator 🏷️:
-The `tag_creator` has either `true` or `false` fields. Assigning `true` will tag the creator of the PR in the comment.
+### 🏷️ TAG_AUTHOR:
+The `TAG_AUTHOR` has either `true` or `false` boolean fields. Assigning `true` will tag the author of the PR in the comment.
+
+### 🏁 ASSIGN_TO_AUTHOR:
+The `ASSIGN_TO_AUTHOR` has either `true` or `false` boolean fields. Assigning `true` will assign the PR to the author of the PR.
 
 ---
 

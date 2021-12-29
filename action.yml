@@ -15,6 +15,9 @@ inputs:
   TAG_AUTHOR:
     description: Author of the pull request will be tagged or not
     required: true
+  ASSIGN_TO_AUTHOR:
+    description: Author of the pull request will be assigned or not
+    required: true
 
 branding:
   color: blue

@@ -8420,20 +8420,22 @@ function run() {
         try {
             const { context } = __nccwpck_require__(5438);
             const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
-            const octokit = github.getOctokit(GITHUB_TOKEN);
-            const comment = core.getInput('content');
-            const reaction = core.getInput('reaction');
-            const tag_creator = core.getInput('tag_creator');
+            const COMMENT_TEXT = core.getInput('COMMENT_TEXT');
+            const PR_REACTION = core.getInput('PR_REACTION');
+            const TAG_AUTHOR = core.getInput('TAG_AUTHOR');
+            const ASSIGN_TO_AUTHOR = core.getInput('ASSIGN_TO_AUTHOR');
             if (typeof GITHUB_TOKEN !== 'string') {
                 throw new Error('Invalid GITHUB_TOKEN: did you forget to set it in your action config?');
             }
+            const octokit = github.getOctokit(GITHUB_TOKEN);
             const { pull_request } = context.payload;
             const payload = context.payload.pull_request;
             const author = payload.user.login;
-            const tag_text = (tag_creator ? `@` + author + ` ` : null);
-            yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: tag_text + comment, id: payload.number.toString() }));
-            yield octokit.rest.issues.addAssignees(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, assignees: author }));
-            yield octokit.rest.reactions.createForIssue(Object.assign(Object.assign({}, context.repo), { repo: context.repo.repo, issue_number: pull_request.number, content: reaction, owner: context.repo.owner }));
+            const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null);
+            const assignee = (ASSIGN_TO_AUTHOR ? author : null);
+            yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: tag_text + COMMENT_TEXT, id: payload.number.toString() }));
+            yield octokit.rest.issues.addAssignees(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, assignees: assignee }));
+            yield octokit.rest.reactions.createForIssue(Object.assign(Object.assign({}, context.repo), { repo: context.repo.repo, issue_number: pull_request.number, content: PR_REACTION, owner: context.repo.owner }));
         }
         catch (e) {
             core.error(e);
