@@ -6,6 +6,12 @@ inputs:
   GITHUB_TOKEN:
     description: Github token
     required: true
+  TENOR_TOKEN:
+    description: Tenor API token
+    required: true
+  searchTerm:
+    description: Search term
+    required: true
   COMMENT_TEXT:
     description: Body of the comment
     required: true
