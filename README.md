@@ -43,10 +43,10 @@ jobs:
 ```
 The comment and the reaction to the PR can be customized according to the user.
 
-###  💬 COMMENT_TEXT:
+####  💬 COMMENT_TEXT:
 The `COMMENT_TEXT` variable can take any string so feel free to enter any comment in this section.
 
-### 🚀 PR_REACTION:
+#### 🚀 PR_REACTION:
 The `PR_REACTION` variable can also be customized. The available reactions are:
 
 | content    | emoji |
@@ -60,10 +60,10 @@ The `PR_REACTION` variable can also be customized. The available reactions are:
 | `heart`    | ❤️    |
 | `hooray`   | 🎉    |
 
-### 🏷️ TAG_AUTHOR:
+#### 🏷️ TAG_AUTHOR:
 The `TAG_AUTHOR` has either `true` or `false` boolean fields. Assigning `true` will tag the author of the PR in the comment.
 
-### 🏁 ASSIGN_TO_AUTHOR:
+#### 🏁 ASSIGN_TO_AUTHOR:
 The `ASSIGN_TO_AUTHOR` has either `true` or `false` boolean fields. Assigning `true` will assign the PR to the author of the PR.
 
 ---
