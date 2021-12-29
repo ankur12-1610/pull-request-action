@@ -87,7 +87,7 @@ Take a look at the Demo PRs:
 - [Demo PR v1.1](https://github.com/ankur12-1610/pull-request-action/pull/40)
   >Code:
   ```yaml
-   name: 'Pull Request Action 🚀'
+  name: 'Pull Request Action 🚀'
 
   on: 
     pull_request:
@@ -113,7 +113,7 @@ Take a look at the Demo PRs:
 - [Demo PR v1.0](https://github.com/ankur12-1610/pull-request-action/pull/10)
   >Code:
   ```yaml
-   name: 'Pull Request Action 🚀'
+  name: 'Pull Request Action 🚀'
 
   on: 
     pull_request:
