@@ -17,6 +17,7 @@ jobs:
           yarn build
       - uses: ./
         with:
+          TENOR_TOKEN: ${{ secrets.TENOR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)'  #enter your custom comment in the content variable
           PR_REACTION: 'rocket' #enter your reaction here
