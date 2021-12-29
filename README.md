@@ -70,7 +70,6 @@ The `ASSIGN_TO_AUTHOR` has either `true` or `false` boolean fields. Assigning `t
 
 ##  Example 🍠:
 Take a look at the [Demo PR](https://github.com/ankur12-1610/pull-request-action/pull/10).
-
 ---
 
 ##  License 🔖:
