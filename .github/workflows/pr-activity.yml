@@ -17,8 +17,9 @@ jobs:
           yarn build
       - uses: ./
         with:
+          TENOR_TOKEN: ${{ secrets.TENOR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)'  #enter your custom comment in the content variable
           PR_REACTION: 'rocket' #enter your reaction here
           TAG_AUTHOR: true #enter true if you want to tag the author of the pull request or enter fase
-          ASSIGN_PR: true #enter true if you want to assign the pull request to the author or enter false
+          ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author or enter false
