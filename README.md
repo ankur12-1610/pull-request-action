@@ -133,9 +133,16 @@ Take a look at the Demo PRs:
             ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
    
   ```
-  
----
+
+# Inspired From
+
+> [:speech_balloon: Auto Comment](https://github.com/wow-actions/auto-comment)
+
 
 ##  License 🔖:
 
 The scripts and documentation in this project are released under the [MIT License](LICENSE)
+
+---
+
+### This project needs a **star** ⭐ from your ♥.
