@@ -145,4 +145,4 @@ The scripts and documentation in this project are released under the [MIT Licens
 
 ---
 
-### This project needs a **star** ⭐ from your ♥.
+### This project needs a **star** ⭐ from yor ♥.
