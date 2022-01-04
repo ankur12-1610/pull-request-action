@@ -132,7 +132,7 @@ Take a look at the Demo PRs:
             TAG_AUTHOR: true #enter true if you want to tag the author of the pull request
             ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
    
-  ```
+  ``
 
 # Inspired From
 
