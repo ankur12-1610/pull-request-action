@@ -19,6 +19,7 @@ async function run() {
     const TAG_AUTHOR = core.getInput('TAG_AUTHOR')
     const ASSIGN_TO_AUTHOR = core.getInput('ASSIGN_TO_AUTHOR')
     const GIPHY_TOPIC = camelCase(core.getInput('GIPHY_TOPIC'))
+    const FIRST_TIMERS_MESSAGE = core.getInput('FIRST_TIMERS_MESSAGE')
     
   
     if ( typeof GITHUB_TOKEN !== 'string' ) {
@@ -30,7 +31,6 @@ async function run() {
     const gifUrl: string = response.data.data.images.fixed_height_small.url
 
 
-    const sender = context.payload.sender.login
     const gif = `\n\n![thanks](${gifUrl})`
     const octokit = github.getOctokit(GITHUB_TOKEN) 
     const { pull_request } = context.payload
@@ -39,6 +39,28 @@ async function run() {
     const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null) 
     const assignee = (ASSIGN_TO_AUTHOR ? author : null)
     
+    //get no of prs created by author
+    const prs_by_author = await octokit.pulls.list({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      created: author,
+      closed: author,
+      state: ['open', 'closed']
+    })
+    const prs_by_author_count = prs_by_author.data.length
+    
+    console.log(`${prs_by_author_count} PRs created by ${author}`)
+
+    if(prs_by_author_count === 1) {
+      const first_timer_message = FIRST_TIMERS_MESSAGE ? FIRST_TIMERS_MESSAGE : `Thanks for your first PR!`
+      await octokit.issues.createComment({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: context.pull_request.number,
+        body: first_timer_message,
+      })
+    }
+
     //comment on PR
     await octokit.rest.issues.createComment({
       ...context.repo,
