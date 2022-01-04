@@ -63,20 +63,6 @@ async function run() {
       owner: context.repo.owner
     })
 
-    //first contributor to PR gets a welcome message
-    const firstPullRequest = await octokit.rest.pulls.list({
-      ...context.repo,
-      state: ['open', 'closed'],   
-      sort: 'created',
-      direction: 'asc',
-    })
-    if (firstPullRequest.data.length === 1) {
-      await octokit.rest.issues.createComment({
-        ...context.repo,
-        issue_number: pull_request.number,
-        body: `:tada: Thanks for contributing to this repo! :tada:`
-      })
-    }
 
   } catch (e) {
     core.error(e)

@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: ankur12-1610/first-interaction@main
       - name: 🔃 Install
         run: |
           yarn
