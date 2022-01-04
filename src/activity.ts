@@ -1,4 +1,3 @@
-require('dotenv').config()
 const core = require('@actions/core')
 const github = require('@actions/github')
 const camelCase = require('camelcase')
@@ -37,13 +36,12 @@ export async function run() {
     const author = payload.user.login
     const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null) 
     const assignee = (ASSIGN_TO_AUTHOR ? author : null)
-    const client = new github.getOctokit(GITHUB_TOKEN)
     
     //get no of prs created by author
     const prs_by_author = await octokit.rest.pulls.list({
       owner: author,
       repo: context.repo.repo,
-      client: client,
+      client: octokit.client,
       sender: author,
       state: 'all'
     })
@@ -52,16 +50,22 @@ export async function run() {
     console.log(`${prs_by_author_count} PRs created by ${author}`)
 
     //comment to first timers
-    let first_timers_comment = ''
     if (prs_by_author_count > 1) {
-    first_timers_comment = FIRST_TIMERS_MESSAGE ? FIRST_TIMERS_MESSAGE : `Thanks for the PR!`
+    const first_timers_comment = FIRST_TIMERS_MESSAGE ? FIRST_TIMERS_MESSAGE : `Thanks for the PR!`
+    await octokit.rest.issues.createComment({
+      ...context.repo,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      issue_number: pull_request.number,
+      body: first_timers_comment
+    })
     }
 
     //comment on PR
     await octokit.rest.issues.createComment({
       ...context.repo,
       issue_number: pull_request.number,
-      body: tag_text + COMMENT_TEXT + gif + first_timers_comment,
+      body: tag_text + COMMENT_TEXT + gif,
       id: payload.number.toString()
     })
     

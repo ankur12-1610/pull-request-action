@@ -59,7 +59,6 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^13.1.0",
     "devmoji": "^2.3.0",
-    "dotenv": "^10.0.0",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.6.0",
