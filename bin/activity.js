@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = void 0;
-require('dotenv').config();
 const core = require('@actions/core');
 const github = require('@actions/github');
 const camelCase = require('camelcase');
@@ -59,7 +58,6 @@ function run() {
             if (prs_by_author_count > 1) {
                 first_timers_comment = FIRST_TIMERS_MESSAGE ? FIRST_TIMERS_MESSAGE : `Thanks for the PR!`;
             }
-            yield octokit.rest.pulls.createReviewComment(Object.assign(Object.assign({}, context.repo), { owner: context.repo.owner, repo: context.repo.repo, issue_number: pull_request.number, body: first_timers_comment, id: payload.number.toString() }));
             //comment on PR
             yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: tag_text + COMMENT_TEXT + gif + first_timers_comment, id: payload.number.toString() }));
             //assign PR to its author
