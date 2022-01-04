@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint 'src/**.js' --fix",
     "test": "eslint 'src/**.js'",
-    "build": "ncc build src/action.ts -o dist",
+    "build": "ncc build src/index.ts -o dist",
     "prepare": "is-ci || husky install .husky"
   },
   "lint-staged": {

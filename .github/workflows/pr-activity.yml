@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ankur12-1610/first-interaction@main
       - name: 🔃 Install
         run: |
           yarn
@@ -25,3 +24,4 @@ jobs:
           GIPHY_TOPIC: 'Thanks a lot' #enter your topic here
           TAG_AUTHOR: true #enter true if you want to tag the author of the pull request or enter fase
           ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author or enter false
+          FIRST_TIMERS_MESSAGE: ':tada: Thanks for your first contribution in this repo!' #your custom message for the first timers
