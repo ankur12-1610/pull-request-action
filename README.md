@@ -123,7 +123,7 @@ Take a look at the Demo PRs:
   jobs:
     test:
       runs-on: ubuntu-latest
-      steps:
+      steps
         - uses: actions/checkout@v2
         - uses: ankur12-1610/pull-request-action@v1.0
           with:
