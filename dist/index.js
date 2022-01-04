@@ -12517,7 +12517,7 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 7672:
+/***/ 2181:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -12535,6 +12535,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.run = void 0;
 (__nccwpck_require__(2437).config)();
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
@@ -12551,13 +12552,13 @@ function run() {
             const TAG_AUTHOR = core.getInput('TAG_AUTHOR');
             const ASSIGN_TO_AUTHOR = core.getInput('ASSIGN_TO_AUTHOR');
             const GIPHY_TOPIC = camelCase(core.getInput('GIPHY_TOPIC'));
+            const FIRST_TIMERS_MESSAGE = core.getInput('FIRST_TIMERS_MESSAGE');
             if (typeof GITHUB_TOKEN !== 'string') {
                 throw new Error('Invalid GITHUB_TOKEN: did you forget to set it in your action config?');
             }
             //fetch GIF from GIPHY
             const response = yield axios_1.default.get(`https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_TOKEN}&tag=${GIPHY_TOPIC}`);
             const gifUrl = response.data.data.images.fixed_height_small.url;
-            const sender = context.payload.sender.login;
             const gif = `\n\n![thanks](${gifUrl})`;
             const octokit = github.getOctokit(GITHUB_TOKEN);
             const { pull_request } = context.payload;
@@ -12565,17 +12566,31 @@ function run() {
             const author = payload.user.login;
             const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null);
             const assignee = (ASSIGN_TO_AUTHOR ? author : null);
+            //get no of prs created by author
+            const prs_by_author = yield octokit.rest.pulls.list({
+                owner: author,
+                repo: context.repo.repo,
+                client: octokit.client,
+                sender: author,
+                state: 'all'
+            });
+            const prs_by_author_count = prs_by_author.data.length;
+            console.log(`${prs_by_author_count} PRs created by ${author}`);
+            if (prs_by_author_count === 1) {
+                const first_timer_message = FIRST_TIMERS_MESSAGE ? FIRST_TIMERS_MESSAGE : `Thanks for your first PR!`;
+                yield octokit.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: context.pull_request.number,
+                    body: first_timer_message,
+                });
+            }
             //comment on PR
             yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: tag_text + COMMENT_TEXT + gif, id: payload.number.toString() }));
             //assign PR to its author
             yield octokit.rest.issues.addAssignees(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, assignees: assignee }));
             //add reaction to PR
             yield octokit.rest.reactions.createForIssue(Object.assign(Object.assign({}, context.repo), { repo: context.repo.repo, issue_number: pull_request.number, content: PR_REACTION, owner: context.repo.owner }));
-            //first contributor to PR gets a welcome message
-            const firstContribution = yield octokit.rest.pulls.list(Object.assign(Object.assign({}, context.repo), { state: 'open', body: 'Welcome first timers!', sort: 'created', direction: 'asc', per_page: 1 }));
-            if (firstContribution.data.length === 1) {
-                yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: `:tada: This is the first time you contributed to this repo. Thanks for the first contribution!` }));
-            }
         }
         catch (e) {
             core.error(e);
@@ -12583,7 +12598,7 @@ function run() {
         }
     });
 }
-run();
+exports.run = run;
 
 
 /***/ }),
@@ -12762,12 +12777,18 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(7672);
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+var exports = __webpack_exports__;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const activity_1 = __nccwpck_require__(2181);
+(0, activity_1.run)();
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;
