@@ -12,9 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.run = void 0;
 require('dotenv').config();
 const core = require('@actions/core');
 const github = require('@actions/github');
+const camelCase = require('camelcase');
 const axios_1 = __importDefault(require("axios"));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -26,10 +28,13 @@ function run() {
             const PR_REACTION = core.getInput('PR_REACTION');
             const TAG_AUTHOR = core.getInput('TAG_AUTHOR');
             const ASSIGN_TO_AUTHOR = core.getInput('ASSIGN_TO_AUTHOR');
+            const GIPHY_TOPIC = camelCase(core.getInput('GIPHY_TOPIC'));
+            const FIRST_TIMERS_MESSAGE = core.getInput('FIRST_TIMERS_MESSAGE');
             if (typeof GITHUB_TOKEN !== 'string') {
                 throw new Error('Invalid GITHUB_TOKEN: did you forget to set it in your action config?');
             }
-            const response = yield axios_1.default.get(`https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_TOKEN}&tag=thanksalot`);
+            //fetch GIF from GIPHY
+            const response = yield axios_1.default.get(`https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_TOKEN}&tag=${GIPHY_TOPIC}`);
             const gifUrl = response.data.data.images.fixed_height_small.url;
             const gif = `\n\n![thanks](${gifUrl})`;
             const octokit = github.getOctokit(GITHUB_TOKEN);
@@ -38,8 +43,28 @@ function run() {
             const author = payload.user.login;
             const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null);
             const assignee = (ASSIGN_TO_AUTHOR ? author : null);
-            yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: tag_text + COMMENT_TEXT + gif, id: payload.number.toString() }));
+            const client = new github.getOctokit(GITHUB_TOKEN);
+            //get no of prs created by author
+            const prs_by_author = yield octokit.rest.pulls.list({
+                owner: author,
+                repo: context.repo.repo,
+                client: client,
+                sender: author,
+                state: 'all'
+            });
+            const prs_by_author_count = prs_by_author.data.length;
+            console.log(`${prs_by_author_count} PRs created by ${author}`);
+            //comment to first timers
+            let first_timers_comment = '';
+            if (prs_by_author_count > 1) {
+                first_timers_comment = FIRST_TIMERS_MESSAGE ? FIRST_TIMERS_MESSAGE : `Thanks for the PR!`;
+            }
+            yield octokit.rest.pulls.createReviewComment(Object.assign(Object.assign({}, context.repo), { owner: context.repo.owner, repo: context.repo.repo, issue_number: pull_request.number, body: first_timers_comment, id: payload.number.toString() }));
+            //comment on PR
+            yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: tag_text + COMMENT_TEXT + gif + first_timers_comment, id: payload.number.toString() }));
+            //assign PR to its author
             yield octokit.rest.issues.addAssignees(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, assignees: assignee }));
+            //add reaction to PR
             yield octokit.rest.reactions.createForIssue(Object.assign(Object.assign({}, context.repo), { repo: context.repo.repo, issue_number: pull_request.number, content: PR_REACTION, owner: context.repo.owner }));
         }
         catch (e) {
@@ -48,4 +73,4 @@ function run() {
         }
     });
 }
-run();
+exports.run = run;

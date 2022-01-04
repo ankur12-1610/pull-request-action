@@ -8,16 +8,13 @@ inputs:
     required: true
   GIPHY_TOKEN:
     description: Giphy API token
-    required: true
-  searchTerm:
-    description: Search term
-    required: true
+    required: false
   COMMENT_TEXT:
     description: Body of the comment
     required: true
   PR_REACTION: 
     description: Reaction to the comment
-    required: true
+    required: false
   TAG_AUTHOR:
     description: Author of the pull request will be tagged or not
     required: true
@@ -26,12 +23,15 @@ inputs:
     required: true
   GIPHY_TOPIC:
     description: Topic for the gif
-    required: true
+    required: false
+  FIRST_TIMERS_MESSAGE:
+    description: Message for the first timers
+    required: false
 
 branding:
   color: blue
   icon: tag
 
 runs:
-    using: node12
-    main: dist/index.js
+    using: 'docker'
+    image: 'Dockerfile'
