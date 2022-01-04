@@ -21,7 +21,6 @@ This action provides the following functionaliy for the Github Actions users:
 
 ## 📝 Prerequisites:
 You'll need to create a "Repository Secret" of name `GIPHY_TOKEN` and its value should be the API key of [giphy](https://giphy.com/). Here is the [article](https://support.giphy.com/hc/en-us/articles/360020283431-Request-A-GIPHY-API-Key) on how to set up the giphy API KEY.
-
 ![giphy-tk](https://user-images.githubusercontent.com/76884959/147668001-4856c7f5-fe79-4ae8-a01d-fb9f1edef88f.png)
 
 
