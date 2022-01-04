@@ -2,15 +2,16 @@
   "name": "pull-request-action",
   "version": "1.0.0",
   "description": "A github action for activity on newly opened pull request.",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "files": [
     "dist",
-    "action.yml"
+    "action.yml",
+    "lib"
   ],
   "scripts": {
     "lint": "eslint 'src/**.js' --fix",
     "test": "eslint 'src/**.js'",
-    "build": "ncc build src/action.ts -o dist",
+    "build": "tsc",
     "prepare": "is-ci || husky install .husky"
   },
   "lint-staged": {
@@ -46,6 +47,7 @@
     "@actions/exec": "^1.0.0",
     "@actions/github": "^5.0.0",
     "@actions/io": "^1.0.0",
+    "@actions/tool-cache": "^1.7.1",
     "@types/axios": "^0.14.0",
     "@types/node": "^17.0.5",
     "@vercel/ncc": "^0.33.1",
