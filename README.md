@@ -9,7 +9,6 @@
   <a href="https://github.com/marketplace/actions/pull-request-action" rel="nofollow"><img alt="website" src="https://img.shields.io/static/v1?label=&labelColor=505050&message=Marketplace&color=0076D6&style=flat-square&logo=google-chrome&logoColor=0076D6" ></a>
   <a href="https://github.com/ankur12-1610/pull-request-action/workflows/release.yml"><img alt="build" src="https://img.shields.io/github/workflow/status/wow-actions/auto-comment/Release/master?logo=github&style=flat-square" ></a>
 </p>
-
 This action provides the following functionaliy for the Github Actions users:
 
 - Auto comment on opening a new PR.
