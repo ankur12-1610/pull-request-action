@@ -3,13 +3,12 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const camelCase = require('camelcase')
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
-import { report } from 'process'
 
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> {}
 }
 
-async function run() {
+export async function run() {
     try {
     const { context } = require('@actions/github')
     const GIPHY_TOKEN = core.getInput('GIPHY_TOKEN')
@@ -19,6 +18,7 @@ async function run() {
     const TAG_AUTHOR = core.getInput('TAG_AUTHOR')
     const ASSIGN_TO_AUTHOR = core.getInput('ASSIGN_TO_AUTHOR')
     const GIPHY_TOPIC = camelCase(core.getInput('GIPHY_TOPIC'))
+    const FIRST_TIMERS_MESSAGE = core.getInput('FIRST_TIMERS_MESSAGE')
     
   
     if ( typeof GITHUB_TOKEN !== 'string' ) {
@@ -30,7 +30,6 @@ async function run() {
     const gifUrl: string = response.data.data.images.fixed_height_small.url
 
 
-    const sender = context.payload.sender.login
     const gif = `\n\n![thanks](${gifUrl})`
     const octokit = github.getOctokit(GITHUB_TOKEN) 
     const { pull_request } = context.payload
@@ -38,12 +37,31 @@ async function run() {
     const author = payload.user.login
     const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null) 
     const assignee = (ASSIGN_TO_AUTHOR ? author : null)
+    const client = new github.getOctokit(GITHUB_TOKEN)
     
+    //get no of prs created by author
+    const prs_by_author = await octokit.rest.pulls.list({
+      owner: author,
+      repo: context.repo.repo,
+      client: client,
+      sender: author,
+      state: 'all'
+    })
+    const prs_by_author_count = prs_by_author.data.length
+
+    console.log(`${prs_by_author_count} PRs created by ${author}`)
+
+    //comment to first timers
+    let first_timers_comment = ''
+    if (prs_by_author_count > 1) {
+    first_timers_comment = FIRST_TIMERS_MESSAGE ? FIRST_TIMERS_MESSAGE : `Thanks for the PR!`
+    }
+
     //comment on PR
     await octokit.rest.issues.createComment({
       ...context.repo,
       issue_number: pull_request.number,
-      body: tag_text + COMMENT_TEXT + gif,
+      body: tag_text + COMMENT_TEXT + gif + first_timers_comment,
       id: payload.number.toString()
     })
     
@@ -63,11 +81,8 @@ async function run() {
       owner: context.repo.owner
     })
 
-
   } catch (e) {
     core.error(e)
     core.setFailed((e as Error).message)
   }
 }
-
-run()
