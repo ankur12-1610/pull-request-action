@@ -1,4 +1,4 @@
-<h1 align="center">Pull Request Action 🚀</h1>
+<h1 align="center">Pull Request Action 🚀</h1
 
 ---
 
