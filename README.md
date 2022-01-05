@@ -7,7 +7,7 @@
   <a href="https://www.typescriptlang.org" rel="nofollow"><img alt="Language" src="https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square"></a>
   <a href="https://github.com/ankur12-1610/pull-request-action/pulls"><img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat-square" ></a>
   <a href="https://github.com/marketplace/actions/pull-request-action" rel="nofollow"><img alt="website" src="https://img.shields.io/static/v1?label=&labelColor=505050&message=Marketplace&color=0076D6&style=flat-square&logo=google-chrome&logoColor=0076D6" ></a>
-  <a href="https://github.com/ankur12-1610/pull-request-action/workflows/release.yml"><img alt="build" src="https://img.shields.io/github/workflow/status/wow-actions/auto-comment/Release/master?logo=github&style=flat-square" ></a>
+  <a href="https://github.com/ankur12-1610/pull-request-action/workflows/pr-activity.yml"><img alt="build" src="https://img.shields.io/github/workflow/status/wow-actions/auto-comment/Release/master?logo=github&style=flat-square" ></a>
 </p>
 
 This action provides the following functionaliy for the Github Actions users:
@@ -57,6 +57,10 @@ The comment and the reaction to the PR can be customized according to the user.
 ### 💬 COMMENT_TEXT:
 
 The `COMMENT_TEXT` variable can take any string so feel free to enter any comment in this section.
+```yml
+          COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)' #enter your custom comment in the content variable
+
+```
 
 ### 🚀 PR_REACTION:
 
@@ -72,24 +76,52 @@ The `PR_REACTION` variable can also be customized. The available reactions are:
 | `eyes`     |  👀   |
 | `heart`    |  ❤️   |
 | `hooray`   |  🎉   |
+```yml
+          PR_REACTION: 'rocket' #enter your reaction here
+```
+
 
 ### 🏷️ TAG_AUTHOR:
 
 The `TAG_AUTHOR` has either `true` or `false` boolean fields. Assigning `true` will tag the author of the PR in the comment.
+```yml
+          TAG_AUTHOR: true #enter true if you want to tag the author of the pull request or enter fase
+
+```
 
 ### 🏁 ASSIGN_TO_AUTHOR:
 
 The `ASSIGN_TO_AUTHOR` has either `true` or `false` boolean fields. Assigning `true` will assign the PR to the author of the PR.
+```yml
+          ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author or enter false
+
+```
 
 ### If user wants to add GIF to the comment:
 
 ### 🪙 GIPHY_TOKEN:
 
 Without `GIPHY_TOKEN` secret, the workflow cannot fetch gifs.
+```yml
+          GIPHY_TOKEN: ${{ secrets.GIPHY_TOKEN }}
+
+```
 
 ### 📍 GIPHY_TOPIC:
 
 The `GIPHTY_TOPIC` variable can take any input, so whether you want a "thankyou" gif or "welcome" all of them is possible ;) so feel free to exploit it.
+```yml
+          GIPHY_TOPIC: 'Thanks a lot' #enter your topic here
+
+```
+
+### 😄 FIRST_TIMERS_MESSAGE:
+
+In order to give a message to the first timers, this variable can take any input.
+```yml
+          FIRST_TIMERS_MESSAGE: ':tada: Thanks for your first contribution in this repo!' #your custom message for the first timers
+
+```
 
 ---
 
@@ -97,7 +129,7 @@ The `GIPHTY_TOPIC` variable can take any input, so whether you want a "thankyou"
 
 Take a look at the Demo PRs:
 
-- [Demo PR v1.1](https://github.com/ankur12-1610/pull-request-action/pull/40)
+- [Demo PR 1](https://github.com/ankur12-1610/pull-request-action/pull/40)
 
   > Code:
 
@@ -124,30 +156,6 @@ Take a look at the Demo PRs:
             ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
   ```
 
-- [Demo PR v1.0](https://github.com/ankur12-1610/pull-request-action/pull/10)
-
-  > Code:
-
-  ```yaml
-  name: 'Pull Request Action 🚀'
-
-  on:
-    pull_request:
-      types: [opened]
-
-  jobs:
-    test:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - uses: ankur12-1610/pull-request-action@v1.0
-          with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)' #enter your custom comment in the content variable
-            PR_REACTION: 'rocket' #enter your reaction here
-            TAG_AUTHOR: true #enter true if you want to tag the author of the pull request
-            ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
-  ```
 
 # Inspired From
 
