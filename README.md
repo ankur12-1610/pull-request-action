@@ -130,6 +130,33 @@ In order to give a message to the first timers, this variable can take any input
 ## Example 🍠:
 
 Take a look at the Demo PRs:
+- [Demo PR 2](https://github.com/ankur12-1610/demo/pull/1)
+
+  > Code:
+
+  ```yaml
+  name: 'Pull Request Action 🚀'
+
+  on:
+    pull_request:
+      types: [opened]
+
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: ankur12-1610/pull-request-action@v1.2
+          with:
+            GIPHY_TOKEN: ${{ secrets.GIPHY_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)' #enter your custom comment in the content variable
+            PR_REACTION: 'rocket' #enter your reaction here
+            GIPHY_TOPIC: 'Thanks a lot' #enter your giphy topic here
+            TAG_AUTHOR: true #enter true if you want to tag the author of the pull request
+            ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
+            FIRST_TIMERS_MESSAGE: ':tada: Thanks for your first contribution in this repo!' #your custom message for the first timers
+  ```
 
 - [Demo PR 1](https://github.com/ankur12-1610/pull-request-action/pull/40)
 
