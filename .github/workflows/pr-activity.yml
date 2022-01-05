@@ -1,6 +1,6 @@
 name: 'Pull Request Action 🚀'
 
-on: 
+on:
   pull_request:
     types: [opened]
 
@@ -19,7 +19,7 @@ jobs:
         with:
           GIPHY_TOKEN: ${{ secrets.GIPHY_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)'  #enter your custom comment in the content variable
+          COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)' #enter your custom comment in the content variable
           PR_REACTION: 'rocket' #enter your reaction here
           GIPHY_TOPIC: 'Thanks a lot' #enter your topic here
           TAG_AUTHOR: true #enter true if you want to tag the author of the pull request or enter fase
