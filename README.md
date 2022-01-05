@@ -7,7 +7,7 @@
   <a href="https://www.typescriptlang.org" rel="nofollow"><img alt="Language" src="https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square"></a>
   <a href="https://github.com/ankur12-1610/pull-request-action/pulls"><img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat-square" ></a>
   <a href="https://github.com/marketplace/actions/pull-request-action" rel="nofollow"><img alt="website" src="https://img.shields.io/static/v1?label=&labelColor=505050&message=Marketplace&color=0076D6&style=flat-square&logo=google-chrome&logoColor=0076D6" ></a>
-  <a href="https://github.com/ankur12-1610/pull-request-action/workflows/pr-activity.yml"><img alt="build" src="https://img.shields.io/github/workflow/status/wow-actions/auto-comment/Release/master?logo=github&style=flat-square" ></a>
+  <a href="https://github.com/ankur12-1610/pull-request-action/actions/workflows/pr-activity.yml" rel="nofollow"><img alt="Workflow Status" src="https://img.shields.io/badge/pull--request--action-Passing-green?style=flat-square&logo=appveyor"></a>
 </p>
 
 This action provides the following functionaliy for the Github Actions users:
