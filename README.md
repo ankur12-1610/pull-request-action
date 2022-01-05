@@ -20,17 +20,19 @@ This action provides the following functionaliy for the Github Actions users:
 ---
 
 ## 📝 Prerequisites:
+
 You'll need to create a "Repository Secret" of name `GIPHY_TOKEN` and its value should be the API key of [giphy](https://giphy.com/). Here is the [article](https://support.giphy.com/hc/en-us/articles/360020283431-Request-A-GIPHY-API-Key) on how to set up the giphy API KEY.
 
 ![giphy-tk](https://user-images.githubusercontent.com/76884959/147668001-4856c7f5-fe79-4ae8-a01d-fb9f1edef88f.png)
 
-
 ## :arrow_up: Usage:
+
 Create a `.github/workflows/pr-activity.yml` file in the repository of your choice, then add following code to it:
+
 ```yaml
 name: 'Pull Request Action 🚀'
 
-on: 
+on:
   pull_request:
     types: [opened]
 
@@ -43,53 +45,66 @@ jobs:
         with:
           GIPHY_TOKEN: ${{ secrets.GIPHY_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)'  #enter your custom comment in the content variable
+          COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)' #enter your custom comment in the content variable
           PR_REACTION: 'rocket' #enter your reaction here
           GIPHY_TOPIC: 'Thanks a lot' #enter your giphy topic here
           TAG_AUTHOR: true #enter true if you want to tag the author of the pull request
           ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
 ```
+
 The comment and the reaction to the PR can be customized according to the user.
-###  💬 COMMENT_TEXT:
+
+### 💬 COMMENT_TEXT:
+
 The `COMMENT_TEXT` variable can take any string so feel free to enter any comment in this section.
 
 ### 🚀 PR_REACTION:
+
 The `PR_REACTION` variable can also be customized. The available reactions are:
 
 | content    | emoji |
-| ---------- | :-----: |
-| `+1`       | 👍    |
-| `-1`       | 👎    |
-| `laugh`    | 😄    |
-| `confused` | 😕    |
-| `rocket`   | 🚀    |
-| `eyes`     | 👀    |
-| `heart`    | ❤️    |
-| `hooray`   | 🎉    |
+| ---------- | :---: |
+| `+1`       |  👍   |
+| `-1`       |  👎   |
+| `laugh`    |  😄   |
+| `confused` |  😕   |
+| `rocket`   |  🚀   |
+| `eyes`     |  👀   |
+| `heart`    |  ❤️   |
+| `hooray`   |  🎉   |
 
 ### 🏷️ TAG_AUTHOR:
+
 The `TAG_AUTHOR` has either `true` or `false` boolean fields. Assigning `true` will tag the author of the PR in the comment.
 
 ### 🏁 ASSIGN_TO_AUTHOR:
+
 The `ASSIGN_TO_AUTHOR` has either `true` or `false` boolean fields. Assigning `true` will assign the PR to the author of the PR.
 
 ### If user wants to add GIF to the comment:
+
 ### 🪙 GIPHY_TOKEN:
+
 Without `GIPHY_TOKEN` secret, the workflow cannot fetch gifs.
 
 ### 📍 GIPHY_TOPIC:
+
 The `GIPHTY_TOPIC` variable can take any input, so whether you want a "thankyou" gif or "welcome" all of them is possible ;) so feel free to exploit it.
 
 ---
 
-##  Example 🍠:
+## Example 🍠:
+
 Take a look at the Demo PRs:
+
 - [Demo PR v1.1](https://github.com/ankur12-1610/pull-request-action/pull/40)
-  >Code:
+
+  > Code:
+
   ```yaml
   name: 'Pull Request Action 🚀'
 
-  on: 
+  on:
     pull_request:
       types: [opened]
 
@@ -102,21 +117,21 @@ Take a look at the Demo PRs:
           with:
             GIPHY_TOKEN: ${{ secrets.GIPHY_TOKEN }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)'  #enter your custom comment in the content variable
+            COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)' #enter your custom comment in the content variable
             PR_REACTION: 'rocket' #enter your reaction here
             GIPHY_TOPIC: 'Thanks a lot' #enter your giphy topic here
             TAG_AUTHOR: true #enter true if you want to tag the author of the pull request
             ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
- 
-   
   ```
-  
+
 - [Demo PR v1.0](https://github.com/ankur12-1610/pull-request-action/pull/10)
-  >Code:
+
+  > Code:
+
   ```yaml
   name: 'Pull Request Action 🚀'
 
-  on: 
+  on:
     pull_request:
       types: [opened]
 
@@ -128,19 +143,17 @@ Take a look at the Demo PRs:
         - uses: ankur12-1610/pull-request-action@v1.0
           with:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)'  #enter your custom comment in the content variable
+            COMMENT_TEXT: 'thanks for submitting a pull request! We will try to review it as soon as we can :)' #enter your custom comment in the content variable
             PR_REACTION: 'rocket' #enter your reaction here
             TAG_AUTHOR: true #enter true if you want to tag the author of the pull request
             ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
-   
   ```
 
 # Inspired From
 
 > [:speech_balloon: Auto Comment](https://github.com/wow-actions/auto-comment)
 
-
-##  License 🔖:
+## License 🔖:
 
 The scripts and documentation in this project are released under the [MIT License](LICENSE)
 

@@ -12,7 +12,7 @@ inputs:
   COMMENT_TEXT:
     description: Body of the comment
     required: true
-  PR_REACTION: 
+  PR_REACTION:
     description: Reaction to the comment
     required: false
   TAG_AUTHOR:
@@ -33,5 +33,5 @@ branding:
   icon: tag
 
 runs:
-    using: 'docker'
-    image: 'Dockerfile'
+  using: 'docker'
+  image: 'Dockerfile'
