@@ -50,6 +50,8 @@ jobs:
           GIPHY_TOPIC: 'Thanks a lot' #enter your giphy topic here
           TAG_AUTHOR: true #enter true if you want to tag the author of the pull request
           ASSIGN_TO_AUTHOR: true #enter true if you want to assign the pull request to the author of the pull request
+          FIRST_TIMERS_MESSAGE: ':tada: Thanks for your first contribution in this repo!' #your custom message for the first timers
+
 ```
 
 The comment and the reaction to the PR can be customized according to the user.
