@@ -34,33 +34,34 @@ export async function run() {
     const { pull_request } = context.payload
     const payload = context.payload.pull_request
     const author = payload.user.login
+    const creator = context.payload.sender.login
     const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null) 
     const assignee = (ASSIGN_TO_AUTHOR ? author : null)
     
-    //get no of prs created by author
-    const prs_by_author = await octokit.rest.pulls.list({
-      owner: author,
-      repo: context.repo.repo,
-      client: octokit.client,
-      sender: author,
-      state: 'all'
-    })
-    const prs_by_author_count = prs_by_author.data.length
+    // //get no of prs created by author
+    // const prs_by_author = await octokit.rest.pulls.list({
+    //   owner: author,
+    //   repo: context.repo.repo,
+    //   client: octokit.client,
+    //   sender: author,
+    //   state: 'all'
+    // })
+    // const prs_by_author_count = prs_by_author.data.length
 
-    console.log(`${prs_by_author_count} PRs created by ${author}`)
+    // console.log(`${prs_by_author_count} PRs created by ${author}`)
 
-    //comment to first timers
-    if (prs_by_author_count > 1) {
-    const first_timers_comment = FIRST_TIMERS_MESSAGE ? FIRST_TIMERS_MESSAGE : `Thanks for the PR!`
-    await octokit.rest.issues.createComment({
-      ...context.repo,
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      issue_number: pull_request.number,
-      body: first_timers_comment
-    })
-    }
-
+    // //comment to first timers
+    // if (prs_by_author_count > 1) {
+    // const first_timers_comment = FIRST_TIMERS_MESSAGE ? FIRST_TIMERS_MESSAGE : `Thanks for the PR!`
+    // await octokit.rest.issues.createComment({
+    //   ...context.repo,
+    //   owner: context.repo.owner,
+    //   repo: context.repo.repo,
+    //   issue_number: pull_request.number,
+    //   body: first_timers_comment
+    // })
+    // }
+    
     //comment on PR
     await octokit.rest.issues.createComment({
       ...context.repo,
@@ -84,6 +85,32 @@ export async function run() {
       content: PR_REACTION,
       owner: context.repo.owner
     })
+
+        //for first timers
+        const opts = octokit.rest.issues.listForRepo.endpoint.merge({
+          ...context.issue,
+          creator,
+          state: 'all'
+        })
+        const issues = await octokit.paginate(opts)
+        
+        for (const issue of issues) {
+          if (issue.number === context.issue.number) {
+            continue
+          }
+    
+          if (issue.pull_request) {
+            return // Creator is already a contributor.
+          }
+        }
+    
+        await octokit.rest.issues.createComment({
+          ...context.repo,
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          issue_number: pull_request.number,
+          body: FIRST_TIMERS_MESSAGE
+        })
 
   } catch (e) {
     core.error(e)
