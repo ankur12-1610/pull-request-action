@@ -42,24 +42,31 @@ function run() {
             const payload = context.payload.pull_request;
             const author = payload.user.login;
             const creator = context.payload.sender.login;
-            const tag_text = TAG_AUTHOR ? `@` + author + ` ` : null;
-            const assignee = ASSIGN_TO_AUTHOR ? author : null;
+            const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null);
+            const assignee = (ASSIGN_TO_AUTHOR ? author : null);
+            console.log(`${creator} is tagging ${author}`);
             //comment on PR
-            yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: tag_text + COMMENT_TEXT + gif, id: payload.number.toString() }));
+            yield octokit.rest.issues.createComment({
+                owner: creator,
+                repo: context.repo.repo,
+                issue_number: pull_request.number,
+                body: tag_text + COMMENT_TEXT + gif,
+                id: payload.number.toString()
+            });
             //assign PR to its author
-            yield octokit.rest.issues.addAssignees(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, assignees: assignee }));
+            yield octokit.rest.issues.addAssignees({
+                owner: creator,
+                repo: context.repo.repo,
+                issue_number: pull_request.number,
+                assignees: assignee
+            });
             //add reaction to PR
-            yield octokit.rest.reactions.createForIssue(Object.assign(Object.assign({}, context.repo), { repo: context.repo.repo, issue_number: pull_request.number, content: PR_REACTION, owner: context.repo.owner }));
-            //for first timers
-            const pulls = yield octokit.rest.pulls.list(Object.assign(Object.assign({}, context.repo), { state: 'all', sort: 'created', direction: 'desc' }));
-            console.log('Checking...');
-            if (pulls.data.length === 1) {
-                console.log('First pull request!');
-                yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_request.number, body: FIRST_TIMERS_MESSAGE, id: payload.number.toString() }));
-            }
-            else {
-                console.log('Not first pull request');
-            }
+            yield octokit.rest.reactions.createForIssue({
+                owner: creator,
+                repo: context.repo.repo,
+                issue_number: pull_request.number,
+                content: PR_REACTION,
+            });
         }
         catch (e) {
             core.error(e);

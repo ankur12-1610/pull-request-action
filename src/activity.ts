@@ -40,10 +40,12 @@ export async function run() {
     const tag_text = (TAG_AUTHOR ? `@` + author + ` ` : null) 
     const assignee = (ASSIGN_TO_AUTHOR ? author : null)
     
+    console.log(`${creator} is tagging ${author}`)
     
     //comment on PR
     await octokit.rest.issues.createComment({
-      ...context.repo,
+      owner: creator,
+      repo: context.repo.repo,
       issue_number: pull_request.number,
       body: tag_text + COMMENT_TEXT + gif,
       id: payload.number.toString()
@@ -51,39 +53,20 @@ export async function run() {
     
     //assign PR to its author
     await octokit.rest.issues.addAssignees({
-      ...context.repo,
+      owner: creator,
+      repo: context.repo.repo,
       issue_number: pull_request.number,
       assignees: assignee
     })
     
     //add reaction to PR
     await octokit.rest.reactions.createForIssue({
-      ...context.repo,
+      owner: creator,
       repo: context.repo.repo,
       issue_number: pull_request.number,
       content: PR_REACTION,
-      owner: context.repo.owner
     })
 
-    //for first timers
-    const pulls = await octokit.rest.pulls.list({
-      ...context.repo,
-      state: 'all',
-      sort: 'created',
-      direction: 'desc',
-    })
-    console.log('Checking...')
-    if( pulls.data.length === 1 ) {
-      console.log('First pull request!')
-      await octokit.rest.issues.createComment({
-        ...context.repo,
-        issue_number: pull_request.number,
-        body: FIRST_TIMERS_MESSAGE,
-        id: payload.number.toString()
-      })
-    } else {
-      console.log('Not first pull request')
-    }
 
   } catch (e) {
     core.error(e)
