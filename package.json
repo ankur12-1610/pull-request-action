@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepare": "is-ci || husky install .husky"
+    "prepare": "is-ci || husky install .husky",
+    "preinstall": "npx only-allow pnpm"
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts,less,md,json}": [
